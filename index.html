@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sudan X - خدمات الرشق الاحترافية</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap">
+    <style>
+        :root {
+            --primary: #006400; /* أخضر داكن مميز للسودان */
+            --secondary: #DAA520; /* ذهبي */
+            --accent: #8B0000; /* أحمر داكن */
+            --dark: #1a1a1a;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+            --gold: #FFD700;
+            --success: #28a745;
+            --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0c2b05, #1a1a1a);
+            color: var(--light);
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+        
+        /* شريط التقدم المتحرك */
+        .progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: rgba(255,255,255,0.1);
+            z-index: 1001;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: var(--gradient);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* الهيدر */
+        header {
+            background: rgba(10, 30, 10, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        header.scrolled {
+            padding: 5px 0;
+            background: rgba(10, 20, 10, 0.98);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            animation: pulse 2s infinite;
+        }
+        
+        .logo h1 {
+            font-size: 2rem;
+            background: linear-gradient(to right, var(--secondary), var(--gold));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-right: 10px;
+            font-weight: 800;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .logo i {
+            font-size: 2.2rem;
+            color: var(--secondary);
+            margin-left: 10px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+        
+        .nav-links a {
+            color: #e0e0e0;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
+            padding: 5px 0;
+        }
+        
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: width 0.3s;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        /* القسم الرئيسي */
+        .hero {
+            padding: 200px 0 120px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(0, 100, 0, 0.1) 0%, rgba(0, 0, 0, 0.8) 70%);
+            z-index: -1;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero h2 {
+            font-size: 3.8rem;
+            margin-bottom: 25px;
+            background: linear-gradient(to right, var(--gold), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1.2;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            animation: fadeInUp 1s ease;
+        }
+        
+        .hero p {
+            font-size: 1.4rem;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            color: #d1d1e0;
+            animation: fadeInUp 1.2s ease;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: var(--gradient);
+            color: white;
+            padding: 16px 40px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            text-decoration: none;
+            transition: all 0.3s;
+            box-shadow: 0 6px 20px rgba(218, 165, 32, 0.4);
+            animation: pulse 2s infinite;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(218, 165, 32, 0.6);
+        }
+        
+        /* خدمات الرشق */
+        .services-section {
+            padding: 100px 0;
+            position: relative;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+            color: var(--secondary);
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--gradient);
+            border-radius: 2px;
+        }
+        
+        .section-title p {
+            color: #a0a0c0;
+            max-width: 700px;
+            margin: 30px auto 0;
+            font-size: 1.2rem;
+        }
+        
+        .platforms-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .platform-card {
+            background: rgba(30, 40, 30, 0.6);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .platform-card:hover {
+            transform: translateY(-15px);
+            border-color: rgba(255, 215, 0, 0.5);
+            box-shadow: 0 15px 40px rgba(218, 165, 32, 0.3);
+        }
+        
+        .platform-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient);
+        }
+        
+        .platform-icon {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .platform-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+        
+        .services-list {
+            list-style: none;
+            text-align: right;
+            margin-top: 25px;
+        }
+        
+        .services-list li {
+            padding: 12px 0;
+            border-bottom: 1px dashed rgba(255,255,255,0.1);
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .services-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .service-name {
+            font-weight: 500;
+        }
+        
+        .service-price {
+            color: var(--gold);
+            font-weight: 700;
+        }
+        
+        /* نموذج الطلب */
+        .order-section {
+            padding: 100px 0;
+            background: rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+        
+        .order-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(30, 40, 30, 0.7);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+            backdrop-filter: blur(10px);
+        }
+        
+        .order-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .order-title h2 {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 15px;
+        }
+        
+        .order-title p {
+            color: #b0b0b0;
+        }
+        
+        .form-group {
+            margin-bottom: 30px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 12px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--secondary);
+        }
+        
+        .form-group input, 
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 16px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: white;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+        }
+        
+        .form-group input:focus, 
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(218, 165, 32, 0.2);
+        }
+        
+        .form-group input::placeholder {
+            color: #a0a0c0;
+        }
+        
+        .whatsapp-btn {
+            background: linear-gradient(to right, #25D366, #128C7E);
+            color: white;
+            border: none;
+            padding: 18px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+        
+        .whatsapp-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.5);
+        }
+        
+        /* الأسعار */
+        .pricing-section {
+            padding: 100px 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23006200" fill-opacity="0.1" d="M0,128L48,149.3C96,171,192,213,288,229.3C384,245,480,235,576,197.3C672,160,768,96,864,80C960,64,1056,96,1152,122.7C1248,149,1344,171,1392,181.3L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') bottom no-repeat;
+            background-size: cover;
+        }
+        
+        .pricing-plans {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 35px;
+            margin-top: 60px;
+        }
+        
+        .pricing-card {
+            background: rgba(30, 40, 30, 0.7);
+            border-radius: 20px;
+            padding: 40px 30px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            text-align: center;
+        }
+        
+        .pricing-card:hover {
+            transform: scale(1.05);
+            border-color: rgba(255, 215, 0, 0.5);
+        }
+        
+        .pricing-card.popular {
+            border: 2px solid var(--secondary);
+            transform: translateY(-20px);
+        }
+        
+        .pricing-card.popular::before {
+            content: 'الأكثر شعبية';
+            position: absolute;
+            top: 20px;
+            left: -35px;
+            background: var(--secondary);
+            color: black;
+            padding: 8px 40px;
+            font-weight: 700;
+            transform: rotate(-45deg);
+            font-size: 0.9rem;
+        }
+        
+        .pricing-header {
+            margin-bottom: 30px;
+        }
+        
+        .pricing-header h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+        
+        .price {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 5px;
+            color: var(--gold);
+        }
+        
+        .price span {
+            font-size: 1.2rem;
+            color: #a0a0c0;
+        }
+        
+        .pricing-features {
+            list-style: none;
+            margin: 30px 0;
+        }
+        
+        .pricing-features li {
+            padding: 15px 0;
+            border-bottom: 1px dashed rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+        }
+        
+        .pricing-features li:last-child {
+            border-bottom: none;
+        }
+        
+        .pricing-features li i {
+            color: var(--secondary);
+            margin-left: 10px;
+            font-size: 1.2rem;
+        }
+        
+        /* مميزات الخدمة */
+        .features-section {
+            padding: 100px 0;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 35px;
+            margin-top: 60px;
+        }
+        
+        .feature-card {
+            background: rgba(30, 40, 30, 0.6);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255, 215, 0, 0.5);
+            box-shadow: 0 15px 40px rgba(218, 165, 32, 0.2);
+        }
+        
+        .feature-icon {
+            width: 90px;
+            height: 90px;
+            background: rgba(218, 165, 32, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            font-size: 2.5rem;
+            color: var(--gold);
+        }
+        
+        .feature-card h3 {
+            font-size: 1.7rem;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+        
+        .feature-card p {
+            color: #b0b0d0;
+            font-size: 1.1rem;
+        }
+        
+        /* آراء العملاء */
+        .testimonials-section {
+            padding: 100px 0;
+            background: rgba(0, 0, 0, 0.1);
+        }
+        
+        .testimonials {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 35px;
+            margin-top: 60px;
+        }
+        
+        .testimonial {
+            background: rgba(30, 40, 30, 0.6);
+            border-radius: 20px;
+            padding: 35px;
+            position: relative;
+            border-left: 4px solid var(--secondary);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .testimonial::before {
+            content: '"';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 5rem;
+            color: rgba(218, 165, 32, 0.1);
+            font-family: serif;
+            line-height: 1;
+        }
+        
+        .testimonial-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .testimonial-content p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 25px;
+        }
+        
+        .client-info {
+            display: flex;
+            align-items: center;
+        }
+        
+        .client-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-left: 20px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        
+        .client-details h4 {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+            color: var(--secondary);
+        }
+        
+        .client-details span {
+            color: #a0a0c0;
+            font-size: 1rem;
+        }
+        
+        /* الفوتر */
+        footer {
+            background: rgba(10, 20, 10, 0.98);
+            padding: 70px 0 30px;
+            border-top: 1px solid rgba(255, 215, 0, 0.2);
+            position: relative;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.6rem;
+            margin-bottom: 25px;
+            color: var(--secondary);
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--secondary);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 15px;
+        }
+        
+        .footer-links a {
+            color: #b0b0b0;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+        }
+        
+        .footer-links a i {
+            margin-left: 10px;
+            color: var(--secondary);
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+            transform: translateX(5px);
+        }
+        
+        .contact-info p {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            color: #b0b0b0;
+        }
+        
+        .contact-info i {
+            margin-left: 10px;
+            color: var(--secondary);
+            font-size: 1.2rem;
+            min-width: 25px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            color: var(--secondary);
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background: var(--secondary);
+            color: black;
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #a0a0c0;
+            font-size: 1rem;
+        }
+        
+        .whatsapp-sticky {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: #25D366;
+            color: white;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            z-index: 1000;
+            box-shadow: 0 5px 25px rgba(37, 211, 102, 0.6);
+            transition: all 0.3s;
+            animation: pulse 2s infinite;
+        }
+        
+        .whatsapp-sticky:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 30px rgba(37, 211, 102, 0.8);
+        }
+        
+        /* الرسوم المتحركة */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(218, 165, 32, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(218, 165, 32, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(218, 165, 32, 0); }
+        }
+        
+        /* التكيف مع الأجهزة المحمولة */
+        @media (max-width: 992px) {
+            .hero h2 {
+                font-size: 3rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .pricing-card.popular {
+                transform: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero {
+                padding: 180px 0 80px;
+            }
+            
+            .hero h2 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2.2rem;
+            }
+            
+            .whatsapp-sticky {
+                bottom: 20px;
+                left: 20px;
+                width: 60px;
+                height: 60px;
+                font-size: 1.8rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .logo h1 {
+                font-size: 1.6rem;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .cta-button {
+                padding: 14px 30px;
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- شريط التقدم -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progress-bar"></div>
+    </div>
+
+    <!-- زر الواتساب الثابت -->
+    <a href="https://wa.me/+249990022983" target="_blank" class="whatsapp-sticky">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Header -->
+    <header id="header">
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <h1>Sudan X</h1>
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <div class="nav-links">
+                    <a href="#services">الخدمات</a>
+                    <a href="#order">طلب خدمة</a>
+                    <a href="#pricing">الباقات</a>
+                    <a href="#testimonials">آراء العملاء</a>
+                    <a href="#contact">تواصل معنا</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2>زود متابعينك بسرعة وجودة عالية مع Sudan X</h2>
+                <p>الخدمة الأولى في السودان لرشق متابعين انستغرام، مشاهدات تيك توك، لايكات، وأكثر بجودة ممتازة ونتائج مضمونة</p>
+                <a href="#order" class="cta-button">
+                    <i class="fas fa-rocket"></i> ابدأ الآن
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- خدمات الرشق -->
+    <section class="services-section" id="services">
+        <div class="container">
+            <div class="section-title">
+                <h2>خدمات الرشق الاحترافية</h2>
+                <p>اختر من بين أفضل خدماتنا لجميع المنصات الاجتماعية</p>
+            </div>
+            
+            <div class="platforms-container">
+                <div class="platform-card">
+                    <div class="platform-icon">
+                        <i class="fab fa-instagram" style="color: #E1306C;"></i>
+                    </div>
+                    <h3>انستغرام</h3>
+                    <ul class="services-list">
+                        <li><span class="service-name">متابعين</span> <span class="service-price">1000 ج.س</span></li>
+                        <li><span class="service-name">لايكات</span> <span class="service-price">500 ج.س</span></li>
+                        <li><span class="service-name">مشاهدات ستوري</span> <span class="service-price">300 ج.س</span></li>
+                        <li><span class="service-name">تعليقات</span> <span class="service-price">800 ج.س</span></li>
+                        <li><span class="service-name">مشاهدات بث مباشر</span> <span class="service-price">700 ج.س</span></li>
+                    </ul>
+                </div>
+                
+                <div class="platform-card">
+                    <div class="platform-icon">
+                        <i class="fab fa-tiktok" style="color: #69C9D0;"></i>
+                    </div>
+                    <h3>تيك توك</h3>
+                    <ul class="services-list">
+                        <li><span class="service-name">متابعين</span> <span class="service-price">900 ج.س</span></li>
+                        <li><span class="service-name">لايكات</span> <span class="service-price">400 ج.س</span></li>
+                        <li><span class="service-name">مشاهدات</span> <span class="service-price">200 ج.س</span></li>
+                        <li><span class="service-name">مشاركات</span> <span class="service-price">600 ج.س</span></li>
+                        <li><span class="service-name">تعليقات</span> <span class="service-price">750 ج.س</span></li>
+                    </ul>
+                </div>
+                
+                <div class="platform-card">
+                    <div class="platform-icon">
+                        <i class="fab fa-youtube" style="color: #FF0000;"></i>
+                    </div>
+                    <h3>يوتيوب</h3>
+                    <ul class="services-list">
+                        <li><span class="service-name">مشتركين</span> <span class="service-price">1200 ج.س</span></li>
+                        <li><span class="service-name">لايكات</span> <span class="service-price">450 ج.س</span></li>
+                        <li><span class="service-name">مشاهدات</span> <span class="service-price">250 ج.س</span></li>
+                        <li><span class="service-name">تعليقات</span> <span class="service-price">800 ج.س</span></li>
+                        <li><span class="service-name">مشاهدات بث مباشر</span> <span class="service-price">900 ج.س</span></li>
+                    </ul>
+                </div>
+                
+                <div class="platform-card">
+                    <div class="platform-icon">
+                        <i class="fab fa-facebook" style="color: #1877F2;"></i>
+                    </div>
+                    <h3>فيسبوك</h3>
+                    <ul class="services-list">
+                        <li><span class="service-name">متابعين صفحة</span> <span class="service-price">1100 ج.س</span></li>
+                        <li><span class="service-name">إعجابات منشور</span> <span class="service-price">500 ج.س</span></li>
+                        <li><span class="service-name">مشاهدات فيديو</span> <span class="service-price">350 ج.س</span></li>
+                        <li><span class="service-name">مشاركات</span> <span class="service-price">700 ج.س</span></li>
+                        <li><span class="service-name">تعليقات</span> <span class="service-price">850 ج.س</span></li>
+                    </ul>
+                </div>
+                
+                <div class="platform-card">
+                    <div class="platform-icon">
+                        <i class="fab fa-twitter" style="color: #1DA1F2;"></i>
+                    </div>
+                    <h3>تويتر</h3>
+                    <ul class="services-list">
+                        <li><span class="service-name">متابعين</span> <span class="service-price">950 ج.س</span></li>
+                        <li><span class="service-name">إعجابات</span> <span class="service-price">400 ج.س</span></li>
+                        <li><span class="service-name">ريتوييت</span> <span class="service-price">550 ج.س</span></li>
+                        <li><span class="service-name">تعليقات</span> <span class="service-price">750 ج.س</span></li>
+                        <li><span class="service-name">مشاهدات تغريدة</span> <span class="service-price">300 ج.س</span></li>
+                    </ul>
+                </div>
+                
+                <div class="platform-card">
+                    <div class="platform-icon">
+                        <i class="fab fa-telegram" style="color: #0088CC;"></i>
+                    </div>
+                    <h3>تلجرام</h3>
+                    <ul class="services-list">
+                        <li><span class="service-name">أعضاء قناة</span> <span class="service-price">1300 ج.س</span></li>
+                        <li><span class="service-name">مشاهدات</span> <span class="service-price">350 ج.س</span></li>
+                        <li><span class="service-name">تفاعل</span> <span class="service-price">900 ج.س</span></li>
+                        <li><span class="service-name">أعضاء مجموعة</span> <span class="service-price">1500 ج.س</span></li>
+                        <li><span class="service-name">مشاركات</span> <span class="service-price">600 ج.س</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- نموذج الطلب -->
+    <section class="order-section" id="order">
+        <div class="container">
+            <div class="order-container">
+                <div class="order-title">
+                    <h2>اطلب خدمتك الآن</h2>
+                    <p>املأ النموذج التالي وسنتواصل معك فوراً لتأكيد طلبك</p>
+                </div>
+                
+                <div class="form-group">
+                    <label for="platform">اختر المنصة:</label>
+                    <select id="platform">
+                        <option value="instagram">انستغرام</option>
+                        <option value="tiktok">تيك توك</option>
+                        <option value="youtube">يوتيوب</option>
+                        <option value="facebook">فيسبوك</option>
+                        <option value="twitter">تويتر</option>
+                        <option value="telegram">تلجرام</option>
+                        <option value="snapchat">سناب شات</option>
+                        <option value="other">منصة أخرى</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="service">نوع الخدمة:</label>
+                    <select id="service">
+                        <option value="followers">متابعين</option>
+                        <option value="likes">لايكات</option>
+                        <option value="views">مشاهدات</option>
+                        <option value="comments">تعليقات</option>
+                        <option value="shares">مشاركات</option>
+                        <option value="live">مشاهدات بث مباشر</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="quantity">الكمية المطلوبة:</label>
+                    <input type="number" id="quantity" placeholder="أدخل الكمية المطلوبة (مثال: 1000)">
+                </div>
+                
+                <div class="form-group">
+                    <label for="username">اسم المستخدم أو الرابط:</label>
+                    <input type="text" id="username" placeholder="أدخل اسم المستخدم أو رابط الحساب">
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">رقم هاتفك:</label>
+                    <input type="tel" id="phone" placeholder="أدخل رقم هاتفك للتواصل" value="+249">
+                </div>
+                
+                <div class="form-group">
+                    <label for="notes">ملاحظات إضافية (اختياري):</label>
+                    <textarea id="notes" rows="3" placeholder="أي ملاحظات أو تفاصيل إضافية تود إضافتها"></textarea>
+                </div>
+                
+                <button class="whatsapp-btn" id="order-btn">
+                    <i class="fab fa-whatsapp"></i> إرسال الطلب عبر واتساب
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- باقات الأسعار -->
+    <section class="pricing-section" id="pricing">
+        <div class="container">
+            <div class="section-title">
+                <h2>باقاتنا المميزة</h2>
+                <p>اختر الباقة التي تناسبك ووفر أكثر مع عروضنا الحصرية</p>
+            </div>
+            
+            <div class="pricing-plans">
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>الباقة الأساسية</h3>
+                        <div class="price">50,000 <span>ج.س</span></div>
+                        <p>للبدء بمشروعك</p>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check-circle"></i> 5,000 متابع انستغرام</li>
+                        <li><i class="fas fa-check-circle"></i> 10,000 لايك تيك توك</li>
+                        <li><i class="fas fa-check-circle"></i> 20,000 مشاهدة فيديو</li>
+                        <li><i class="fas fa-check-circle"></i> 1,000 عضو تلجرام</li>
+                        <li><i class="fas fa-check-circle"></i> ضمان 7 أيام</li>
+                    </ul>
+                    <a href="#order" class="cta-button" style="width: 100%; text-align: center; margin-top: 20px;">
+                        اختر هذه الباقة
+                    </a>
+                </div>
+                
+                <div class="pricing-card popular">
+                    <div class="pricing-header">
+                        <h3>الباقة المتوسطة</h3>
+                        <div class="price">120,000 <span>ج.س</span></div>
+                        <p>الأكثر طلباً</p>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check-circle"></i> 15,000 متابع انستغرام</li>
+                        <li><i class="fas fa-check-circle"></i> 50,000 لايك تيك توك</li>
+                        <li><i class="fas fa-check-circle"></i> 100,000 مشاهدة فيديو</li>
+                        <li><i class="fas fa-check-circle"></i> 5,000 عضو تلجرام</li>
+                        <li><i class="fas fa-check-circle"></i> 2,500 متابع تويتر</li>
+                        <li><i class="fas fa-check-circle"></i> ضمان 15 يوماً</li>
+                    </ul>
+                    <a href="#order" class="cta-button" style="width: 100%; text-align: center; margin-top: 20px;">
+                        اختر هذه الباقة
+                    </a>
+                </div>
+                
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>الباقة المميزة</h3>
+                        <div class="price">250,000 <span>ج.س</span></div>
+                        <p>للحسابات الاحترافية</p>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check-circle"></i> 50,000 متابع انستغرام</li>
+                        <li><i class="fas fa-check-circle"></i> 200,000 لايك تيك توك</li>
+                        <li><i class="fas fa-check-circle"></i> 500,000 مشاهدة فيديو</li>
+                        <li><i class="fas fa-check-circle"></i> 15,000 عضو تلجرام</li>
+                        <li><i class="fas fa-check-circle"></i> 10,000 متابع تويتر</li>
+                        <li><i class="fas fa-check-circle"></i> 5,000 مشترك يوتيوب</li>
+                        <li><i class="fas fa-check-circle"></i> ضمان 30 يوماً</li>
+                    </ul>
+                    <a href="#order" class="cta-button" style="width: 100%; text-align: center; margin-top: 20px;">
+                        اختر هذه الباقة
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- مميزات الخدمة -->
+    <section class="features-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>لماذا تختار Sudan X؟</h2>
+                <p>مميزاتنا التي تجعلنا الخيار الأول للرشق الاحترافي</p>
+            </div>
+            
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>متابعين حقيقيين</h3>
+                    <p>نوفر متابعين نشطين وحقيقيين وليس حسابات وهمية تضر بحسابك على المدى الطويل</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>سرعة في التنفيذ</h3>
+                    <p>خدمة سريعة تبدأ فوراً بعد تأكيد الطلب والدفع مع توصيل خلال ساعات</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>أمان تام</h3>
+                    <p>نضمن أمان حسابك وعدم تعرضه للإيقاف أو الحظر بأساليبنا الاحترافية</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>دعم فني 24/7</h3>
+                    <p>فريق دعم فني متاح على مدار الساعة لمساعدتك وحل أي مشكلة تواجهك</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h3>سرية تامة</h3>
+                    <p>جميع بياناتك محمية بنظام تشفير متقدم ولا نشاركها مع أي جهة خارجية</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-sync-alt"></i>
+                    </div>
+                    <h3>تجديد تلقائي</h3>
+                    <p>خدمة تجديد تلقائية للمتابعين لضمان استمرارية النمو لحسابك</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- آراء العملاء -->
+    <section class="testimonials-section" id="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>آراء عملائنا</h2>
+                <p>تجارب حقيقية من عملائنا المميزين في السودان</p>
+            </div>
+            
+            <div class="testimonials">
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        <p>"خدمة ممتازة وسريعة! حصلت على 20,000 متابع خلال يومين فقط، والمتابعين حقيقيين ونشطين. أنصح الجميع بهذه الخدمة."</p>
+                        <div class="client-info">
+                            <div class="client-avatar">م</div>
+                            <div class="client-details">
+                                <h4>محمد أحمد</h4>
+                                <span>مؤثر في انستغرام - الخرطوم</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        <p>"بعد تجربة عدة خدمات، هذه الخدمة الأفضل على الإطلاق! الدعم الفني كان سريعاً ومفيداً، والنتائج تجاوزت توقعاتي بمراحل."</p>
+                        <div class="client-info">
+                            <div class="client-avatar">س</div>
+                            <div class="client-details">
+                                <h4>سارة عثمان</h4>
+                                <span>صانعة محتوى في تيك توك - أم درمان</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        <p>"جربت الباقة المميزة وكانت النتائج مذهلة! زادت مشاهدات فيديوهاتي على يوتيوب بنسبة 300% خلال أسبوع واحد فقط. شكراً Sudan X!"</p>
+                        <div class="client-info">
+                            <div class="client-avatar">ع</div>
+                            <div class="client-details">
+                                <h4>عمر حسن</h4>
+                                <span>صانع محتوى يوتيوب - بورتسودان</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- الفوتر -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Sudan X</h3>
+                    <p>الخدمة الأولى في السودان لخدمات الرشق الاحترافية لجميع المنصات الاجتماعية بأعلى جودة وأسرع وقت.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="https://wa.me/+249990022983" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>روابط سريعة</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-chevron-left"></i> الصفحة الرئيسية</a></li>
+                        <li><a href="#services"><i class="fas fa-chevron-left"></i> خدماتنا</a></li>
+                        <li><a href="#pricing"><i class="fas fa-chevron-left"></i> باقات الأسعار</a></li>
+                        <li><a href="#testimonials"><i class="fas fa-chevron-left"></i> آراء العملاء</a></li>
+                        <li><a href="#order"><i class="fas fa-chevron-left"></i> اطلب الآن</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>تواصل معنا</h3>
+                    <div class="contact-info">
+                        <p><i class="fas fa-phone-alt"></i> +249 99 002 2983</p>
+                        <p><i class="fab fa-whatsapp"></i> +249 99 002 2983</p>
+                        <p><i class="fas fa-envelope"></i> info@sudanx.com</p>
+                        <p><i class="fas fa-map-marker-alt"></i> الخرطوم، السودان</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                © 2023 Sudan X. جميع الحقوق محفوظة | تم التطوير بكل ❤️ لخدمتكم
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // شريط التقدم أثناء التمرير
+        window.addEventListener('scroll', function() {
+            const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+            const scrolled = window.scrollY;
+            const progress = (scrolled / scrollable) * 100;
+            document.getElementById('progress-bar').style.width = progress + '%';
+            
+            // إضافة كلاس للهيدر عند التمرير
+            const header = document.getElementById('header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+        
+        // تمكين اختيار المنصة
+        document.addEventListener('DOMContentLoaded', function() {
+            // زر الطلب عبر واتساب
+            const orderBtn = document.getElementById('order-btn');
+            orderBtn.addEventListener('click', function() {
+                const platform = document.getElementById('platform').value;
+                const service = document.getElementById('service').value;
+                const quantity = document.getElementById('quantity').value;
+                const username = document.getElementById('username').value;
+                const phone = document.getElementById('phone').value;
+                const notes = document.getElementById('notes').value;
+                
+                if (!platform || !service || !quantity || !username || !phone) {
+                    alert('الرجاء ملء جميع الحقول المطلوبة');
+                    return;
+                }
+                
+                // أسماء الخدمات
+                const serviceNames = {
+                    'followers': 'متابعين',
+                    'likes': 'لايكات',
+                    'views': 'مشاهدات',
+                    'comments': 'تعليقات',
+                    'shares': 'مشاركات',
+                    'live': 'مشاهدات بث مباشر'
+                };
+                
+                // أسماء المنصات
+                const platformNames = {
+                    'instagram': 'انستغرام',
+                    'tiktok': 'تيك توك',
+                    'youtube': 'يوتيوب',
+                    'facebook': 'فيسبوك',
+                    'twitter': 'تويتر',
+                    'telegram': 'تلجرام',
+                    'snapchat': 'سناب شات',
+                    'other': 'منصة أخرى'
+                };
+                
+                // إنشاء رسالة واتساب
+                const whatsappMessage = `مرحباً، أرغب في طلب خدمة رشق من Sudan X
+
+المنصة: ${platformNames[platform]}
+نوع الخدمة: ${serviceNames[service]}
+الكمية: ${quantity}
+اسم المستخدم/الرابط: ${username}
+رقم الهاتف: ${phone}
+${notes ? `ملاحظات: ${notes}` : ''}
+
+أرجو التواصل معي لتأكيد الطلب.`;
+                
+                // تشفير الرسالة لرابط واتساب
+                const encodedMessage = encodeURIComponent(whatsappMessage);
+                
+                // افتح رابط واتساب
+                window.open(`https://wa.me/249990022983?text=${encodedMessage}`, '_blank');
+            });
+            
+            // تأثيرات التمرير السلس
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        window.scrollTo({
+                            top: target.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
